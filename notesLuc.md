@@ -72,3 +72,14 @@ page.add(
 
 ### Flet events:
 Certains widgets peuvent réagir à des événements, par exemple le 'onclick' d'un bouton.
+
+### Etc.
+Pour en savoir plus sur les widget de base voir : https://flet.dev/docs/getting-started/flet-controls
+
+
+
+
+
+## Custom controls:
+On peut créer nos propre widgets en utilisant l'héritage !
+Suffit de créer une classe héritant d'un widget de base pour pouvoir le customiser à notre guise.
