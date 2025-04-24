@@ -9,8 +9,8 @@ def main(page : ft.Page):
     """   
     
     VIOLET = "#f6d4fa"
-    ROSE = "#fad4f6"
     HARD_RED = "#ff6b6b"
+    CYAN = "#bbfaf6"
     COMPUTATION_STRING = ""
     
     
@@ -38,6 +38,8 @@ def main(page : ft.Page):
         
     def update_display_on_click(e):
         nonlocal COMPUTATION_STRING
+        if COMPUTATION_STRING == "Err":
+            COMPUTATION_STRING = ""
         COMPUTATION_STRING += e.control.text
         display_panel.content.value = COMPUTATION_STRING
         page.update()
@@ -82,7 +84,8 @@ def main(page : ft.Page):
         alignment=ft.alignment.center,
         border_radius = 10,
         margin=ft.margin.only(bottom=10),
-        width = 300
+        width = 300,
+        shadow = ft.BoxShadow(blur_radius=50, color=CYAN)
     )
     
     #Calculator:
@@ -159,8 +162,8 @@ def main(page : ft.Page):
         ),
             
         width=320,
-        shadow=ft.BoxShadow(blur_radius=15, color=VIOLET),
-        border = ft.border.all(4, ROSE),
+        shadow = ft.BoxShadow(blur_radius=100, spread_radius=10, color=CYAN),
+        border = ft.border.all(4, HARD_RED),
         border_radius = 20,
         padding = 20
     )
@@ -171,7 +174,19 @@ def main(page : ft.Page):
     =====================================================================================================
     """
     
+    luc_text = ft.Text(
+        value= "C'est ma Calculatrice euhh", 
+        color= ft.Paint(
+            gradient=ft.PaintLinearGradient(
+                (0, 10), 
+                (0, 100), 
+                colors=[ft.Colors.BLUE, ft.Colors.YELLOW]
+                ),
+            )
+        )
+    
     page.add(
+        luc_text,
         main_content
     )
     
