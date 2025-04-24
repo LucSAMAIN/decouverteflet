@@ -2,29 +2,32 @@ import flet as ft
 
 
 def main(page : ft.Page):
+    """
+    =====================================================================================================
+    ==========================================GLOBAL VARIABLES ==========================================
+    =====================================================================================================
+    """   
+    
+    VIOLET = "#f6d4fa"
+    ROSE = "#fad4f6"
+    HARD_RED = "#ff6b6b"
+    COMPUTATION_STRING = ""
+    
     
     """
     =====================================================================================================
     ========================================== PAGE SETTINGS ============================================
     =====================================================================================================
     """
-    
-    #Title:
     page.title = "Ma calculatrice en Flet"
-    
-    #Vertical / horizontal alignment:
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
+    page.bgcolor = VIOLET
     
-    #Fonts:
+    
     page.fonts = {
         "RobotoSlab": "https://github.com/google/fonts/raw/main/apache/robotoslab/RobotoSlab%5Bwght%5D.ttf"
     }
-    
-    """
-    GLOBAL VARIABLES
-    """    
-    COMPUTATION_STRING = ""
     
     """
     =====================================================================================================
@@ -36,21 +39,24 @@ def main(page : ft.Page):
     def update_display_on_click(e):
         nonlocal COMPUTATION_STRING
         COMPUTATION_STRING += e.control.text
-        display_panel.value = COMPUTATION_STRING
+        display_panel.content.value = COMPUTATION_STRING
         page.update()
         
 
     def equal_button_on_click_func(e):
         nonlocal COMPUTATION_STRING
-        i = 0
-        stackComputation = [] # (operator, operandLeft, operantRight), ...
-        while (i<len(COMPUTATION_STRING)):
-            c = COMPUTATION_STRING[i]
-            if c == "=":
-                update_display("SYNTAX ERROR")
-            elif c == "+":
-                pass
-            i+=1
+        try:
+            COMPUTATION_STRING = str(eval(COMPUTATION_STRING))
+        except Exception:
+            COMPUTATION_STRING = "Err"
+        display_panel.content.value = COMPUTATION_STRING
+        page.update()
+        
+    def clear_button_on_click_func(e):
+        nonlocal COMPUTATION_STRING
+        COMPUTATION_STRING = ""
+        display_panel.content.value = COMPUTATION_STRING
+        page.update()
 
                 
         
@@ -60,9 +66,7 @@ def main(page : ft.Page):
     =====================================================================================================
     """
     
-    def update_display(display_string):
-        display_panel.value = display_string
-        page.update()
+        
     
     """
     =====================================================================================================
@@ -72,9 +76,13 @@ def main(page : ft.Page):
   
     
     #Display panel:
-    display_panel = ft.Text(
-        COMPUTATION_STRING,
-        font_family = "RobotoSlab"
+    display_panel = ft.Container(
+        content = ft.Text(COMPUTATION_STRING, font_family = "RobotoSlab"),
+        border = ft.border.all(4, HARD_RED),
+        alignment=ft.alignment.center,
+        border_radius = 10,
+        margin=ft.margin.only(bottom=10),
+        width = 300
     )
     
     #Calculator:
@@ -82,12 +90,15 @@ def main(page : ft.Page):
     add_button = ft.ElevatedButton(text="+", on_click=update_display_on_click)
     minus_button = ft.ElevatedButton(text="-", on_click=update_display_on_click)
     times_button = ft.ElevatedButton(text="*", on_click=update_display_on_click)
+    divide_button = ft.ElevatedButton(text="/", on_click=update_display_on_click)
+    
     
     calculation_row = ft.Row(
         controls=[
             add_button,
             minus_button,
-            times_button],
+            times_button,
+            divide_button],
         alignment=ft.MainAxisAlignment.CENTER
     )
     
@@ -127,19 +138,31 @@ def main(page : ft.Page):
     
     zero_button = ft.ElevatedButton(text="0", on_click=update_display_on_click)
     equal_button = ft.ElevatedButton(text="=", on_click=equal_button_on_click_func)
-    keypad_0_row = ft.Row(controls=[zero_button, equal_button], alignment=ft.MainAxisAlignment.CENTER)
+    clear_button = ft.ElevatedButton(text="CE", on_click=clear_button_on_click_func)
+    keypad_0_row = ft.Row(controls=[zero_button, 
+                                    equal_button,
+                                    clear_button], 
+                          alignment=ft.MainAxisAlignment.CENTER)
 
-    main_content = ft.Column(
-        controls=[
-            display_panel,
-            calculation_row,
-            keypad_123_row,
-            keypad_456_row,
-            keypad_789_row,
-            keypad_0_row
-        ],
-        alignment=ft.MainAxisAlignment.CENTER,
-        horizontal_alignment=ft.CrossAxisAlignment.CENTER
+    main_content = ft.Container(
+            ft.Column(
+            controls=[
+                display_panel,
+                calculation_row,
+                keypad_123_row,
+                keypad_456_row,
+                keypad_789_row,
+                keypad_0_row
+            ],
+            alignment=ft.MainAxisAlignment.CENTER,
+            horizontal_alignment=ft.CrossAxisAlignment.CENTER
+        ),
+            
+        width=320,
+        shadow=ft.BoxShadow(blur_radius=15, color=VIOLET),
+        border = ft.border.all(4, ROSE),
+        border_radius = 20,
+        padding = 20
     )
 
     """
