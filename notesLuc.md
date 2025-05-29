@@ -1,7 +1,7 @@
 # Apprentissage de Flet via la documentation officielle et gpt / copilot.
 Chat(GPT) associé : https://chatgpt.com/c/6807d907-ad04-800f-849d-88eca895c8c3
 
-Documentation officielle : https://flet.dev/docs/
+Documentation officielle : htt  ps://flet.dev/docs/
 
 ## Installation et introduction:
 ### Installation et création d'un environnement virtuel pour flet
@@ -82,4 +82,22 @@ Pour en savoir plus sur les widget de base voir : https://flet.dev/docs/getting-
 
 ## Custom controls:
 On peut créer nos propre widgets en utilisant l'héritage !
-Suffit de créer une classe héritant d'un widget de base pour pouvoir le customiser à notre guise.
+Suffit de créer une classe héritant d'un widget de base pour pouvoir le customiser à notre guise. voir : https://flet.dev/docs/getting-started/custom-controls
+
+
+## Flet adaptation:
+https://flet.dev/docs/getting-started/adaptive-apps
+En fonction de la plateforme (IOS, android) Flet adapte les widgets.
+```python
+page.adaptive = True
+```
+Alors par exemple si on est sur un IOS les rendus seront différents.
+Cettre propriété peut aussi se régler au niveau d'un élément et pas la page en entier.
+
+Mais parfois il faudra modifier notre custom element pour qu'il s'adpate exactement comme on le souhaite.
+Comprendre que Flet ne saura pas exactement ce qu'on souhaite...
+J'ai parlé de IOs et android mais on peut aussi pensé à la propriété `page.web`.
+
+
+## Navigation and routing:
+https://flet.dev/docs/getting-started/navigation-and-routing
