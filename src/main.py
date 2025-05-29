@@ -1,5 +1,5 @@
 import flet as ft
-
+from calculatrice import calc
 
 def main(page: ft.Page):
     page.title = "Hello Flet!" # le nom de l'onglet
@@ -42,6 +42,26 @@ def main(page: ft.Page):
     
     btn = ft.ElevatedButton("Click me!")
     page.add(btn)
+    
+    
+    def go_calc(e):
+        page.go("/calculatrice")  # Utilise page.go pour changer de route
+
+    def route_change(e: ft.RouteChangeEvent):
+        page.views.clear()
+        if page.route == "/calculatrice":
+            # Affiche la vue calculatrice
+            calc(page)
+        else:
+            # Affiche la vue principale
+            # (remets ici tes widgets principaux si besoin)
+            pass
+        page.update()
+
+    page.on_route_change = route_change
+    page.add(
+        ft.ElevatedButton("GoToCalculatrice", on_click=go_calc)
+    )
 
 
 ft.app(main)

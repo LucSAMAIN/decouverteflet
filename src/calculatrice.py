@@ -1,7 +1,7 @@
 import flet as ft
 
 
-def main(page : ft.Page):
+def calc(page : ft.Page):
     """
     =====================================================================================================
     ==========================================GLOBAL VARIABLES ==========================================
@@ -190,5 +190,3 @@ def main(page : ft.Page):
         main_content
     )
     
-    
-ft.app(target=main)
