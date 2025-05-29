@@ -1,26 +1,25 @@
 import flet as ft
 
+# import pages:
+from pages.home import homeView
+from pages.login import logInView
+
 
 def main(page: ft.Page):
-    counter = ft.Text("0", size=50, data=0)
-
-    def increment_click(e):
-        counter.data += 1
-        counter.value = str(counter.data)
-        counter.update()
-
-    page.floating_action_button = ft.FloatingActionButton(
-        icon=ft.Icons.ADD, on_click=increment_click
-    )
-    page.add(
-        ft.SafeArea(
-            ft.Container(
-                counter,
-                alignment=ft.alignment.center,
-            ),
-            expand=True,
-        )
-    )
+    page.title = "muti pages app test"
+    
+    def route_change(e : ft.RouteChangeEvent):
+        page.views.clear()
+        if page.route == "/home":
+            page.views.append(homeView(page))
+        elif page.route == "/login":
+            page.views.append(logInView(page))
+        
+        page.update()
+        
+    
+    page.on_route_change = route_change
+    page.go("/home")
 
 
-ft.app(main)
+ft.app(main, assets_dir="src/assets")
